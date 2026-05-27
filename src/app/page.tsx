@@ -3942,7 +3942,7 @@ function HomeContent() {
               <div className="flex gap-2 p-4 pt-0 pb-5 sm:pb-4">
                 {selectedBuilding.login.toLowerCase() === authLogin ? (
                   <>
-                    <Link
+                    <a
                       href={`/shop/${selectedBuilding.login}?tab=loadout`}
                       className="btn-press flex-1 py-2 text-center text-[10px] text-bg"
                       style={{
@@ -3951,17 +3951,17 @@ function HomeContent() {
                       }}
                     >
                       Loadout
-                    </Link>
-                    <Link
+                    </a>
+                    <a
                       href={`/dev/${selectedBuilding.login}`}
                       className="btn-press flex-1 border-[2px] border-border py-2 text-center text-[10px] text-cream transition-colors hover:border-border-light"
                     >
                       Profile
-                    </Link>
+                    </a>
                   </>
                 ) : (
                   <>
-                    <Link
+                    <a
                       href={`/dev/${selectedBuilding.login}`}
                       className="btn-press flex-1 py-2 text-center text-[10px] text-bg"
                       style={{
@@ -3970,7 +3970,7 @@ function HomeContent() {
                       }}
                     >
                       View Profile
-                    </Link>
+                    </a>
                     <a
                       href={`https://leetcode.com/u/${selectedBuilding.login}/`}
                       target="_blank"
