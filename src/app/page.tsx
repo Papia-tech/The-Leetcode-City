@@ -3218,13 +3218,6 @@ function HomeContent() {
         open={analyticsOpen}
         onClose={() => setAnalyticsOpen(false)}
       />
-      <button
-        onClick={() => setAnalyticsOpen((v) => !v)}
-        className={`fixed top-[52px] right-3 z-40 border border-border bg-bg/90 px-2 py-1 text-[9px] transition-colors hover:border-border-light sm:top-[60px] sm:right-4 ${codingPanelOpen ? "hidden" : ""}`}
-        style={{ color: analyticsOpen ? "#ffa116" : "#8c8c9c" }}
-      >
-        [ANALYTICS]
-      </button>
 
       {/* ─── Explore Mode: minimal UI ─── */}
       {exploreMode && !flyMode && (
@@ -3271,7 +3264,7 @@ function HomeContent() {
 
           {/* Feed toggle (top-right, below LeetCode badges on desktop) */}
           {feedEvents.length >= 1 && (
-            <div className="pointer-events-auto absolute top-3 right-3 sm:top-14 sm:right-4">
+            <div className="pointer-events-auto absolute top-3 right-3 sm:top-[60px] sm:right-4">
               <button
                 onClick={() => setFeedPanelOpen(true)}
                 className="flex items-center gap-2 border-[3px] border-border bg-bg/70 px-3 py-1.5 text-[10px] backdrop-blur-sm transition-colors"
@@ -3365,6 +3358,13 @@ function HomeContent() {
               <span className="hidden sm:inline text-muted">live</span>
             </div>
           )}
+          <button
+            onClick={() => setAnalyticsOpen((v) => !v)}
+            className="hidden sm:flex items-center gap-1.5 border-[3px] border-border bg-bg/70 px-2.5 py-1 text-[10px] backdrop-blur-sm transition-colors hover:border-border-light"
+            style={{ color: analyticsOpen ? "#ffa116" : "#8c8c9c" }}
+          >
+            [ANALYTICS]
+          </button>
           {(() => {
             const energyLabel =
               codingCount === 0
