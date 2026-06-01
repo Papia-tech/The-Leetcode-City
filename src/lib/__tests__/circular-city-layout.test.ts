@@ -75,6 +75,14 @@ describe("circular city layout", () => {
     expect(layout.plazas.length).toBeGreaterThan(6);
     expect(layout.decorations.length).toBeGreaterThan(40);
     expect(layout.plazas[0].position).toEqual([0, 0, 0]);
+    expect(
+      layout.decorations.some(
+        (decoration) =>
+          decoration.type === "fountain" &&
+          decoration.position[0] === 0 &&
+          decoration.position[2] === 0,
+      ),
+    ).toBe(false);
 
     const nearestBuildingRadius = Math.min(
       ...layout.buildings.map((building) =>

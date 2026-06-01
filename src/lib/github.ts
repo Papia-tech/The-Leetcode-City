@@ -427,7 +427,6 @@ function rebuildCircularCityDecorations(
     size: CIRCULAR_CENTER_CLEARANCE * 0.9,
     variant: 0.5,
   });
-  decorations.push({ type: 'fountain', position: [0, 0, 0], rotation: 0, variant: 0 });
 
   const ringCount = Math.max(
     2,
