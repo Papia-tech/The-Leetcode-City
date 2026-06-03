@@ -370,7 +370,7 @@ function AmbientOceanShips({ cityRadius }: { cityRadius: number }) {
       // Cruise in the open water further away from the city boundary!
       const radius = cityRadius * 1.45 + rng() * (cityRadius * 0.4);
       const angle = (i / 18) * Math.PI * 2 + rng() * 0.4;
-      
+
       // Speedboats travel significantly faster!
       const speedMultiplier = type === "speedboat" ? 2.2 : 1.0;
       const speed = (0.008 + rng() * 0.012) * speedMultiplier;
@@ -381,7 +381,7 @@ function AmbientOceanShips({ cityRadius }: { cityRadius: number }) {
         scaleVal = 16 + rng() * 8; // compact sleek speedboats
       }
       const scale: [number, number, number] = [scaleVal, scaleVal, scaleVal];
-      
+
       const hullColor = type === "cruise" ? "#0f172a" : colors[i % colors.length];
       const cabinColor = "#f4ebd0";
 
@@ -421,7 +421,7 @@ function AmbientOceanShips({ cityRadius }: { cityRadius: number }) {
       // Rocking motions optimized for size and style
       const bobMultiplier = s.type === "speedboat" ? 1.8 : 1.0;
       const pitchMultiplier = s.type === "speedboat" ? 2.5 : 1.0;
-      
+
       const bobbing = (s.type === "speedboat" ? -20.0 : -23.5) + Math.sin(time * 0.8 * bobMultiplier + idx) * 0.6 * bobMultiplier;
       const pitch = Math.sin(time * 0.6 * pitchMultiplier + idx) * 0.02 * pitchMultiplier;
       const roll = Math.cos(time * 0.8 * pitchMultiplier + idx) * 0.03 * pitchMultiplier;
@@ -467,7 +467,7 @@ function AmbientOceanShips({ cityRadius }: { cityRadius: number }) {
               <mesh geometry={boxGeo} position={[0, 1.85, -0.68]} scale={[1.0, 0.2, 0.05]}>
                 <meshStandardMaterial color="#38bdf8" emissive="#0ea5e9" emissiveIntensity={2.5} toneMapped={false} />
               </mesh>
-              
+
               {/* Mast / Radar Tower on top of cabin */}
               <mesh geometry={cylinderGeo} position={[0, 2.3, -1.2]} scale={[0.08, 0.6, 0.08]}>
                 <meshStandardMaterial color="#475569" />
@@ -558,7 +558,7 @@ function AmbientOceanShips({ cityRadius }: { cityRadius: number }) {
               <mesh geometry={boxGeo} position={[0, 0.7, 0]} scale={[1.6, 0.2, 4.8]}>
                 <meshStandardMaterial color="#f8fafc" roughness={0.7} />
               </mesh>
-              
+
               {/* Stepped Voxel Bow (Pointy but retro blocky) */}
               <mesh geometry={boxGeo} position={[0, 0.3, 2.7]} scale={[1.4, 0.6, 0.6]}>
                 <meshStandardMaterial color="#0f172a" roughness={0.7} />
@@ -664,7 +664,7 @@ function AmbientOceanShips({ cityRadius }: { cityRadius: number }) {
               <mesh geometry={boxGeo} position={[0, 0.25, 0]} scale={[1.1, 0.5, 3.2]}>
                 <meshStandardMaterial color={s.hullColor} metalness={0.7} roughness={0.2} />
               </mesh>
-              
+
               {/* Aggressive wedge pointed front */}
               <mesh geometry={boxGeo} position={[0, 0.25, 1.8]} scale={[0.9, 0.5, 0.4]}>
                 <meshStandardMaterial color={s.hullColor} metalness={0.7} roughness={0.2} />
@@ -1181,7 +1181,7 @@ export default function AtmosphereCycleManager({
       if (lightningTimeRef.current >= nextLightningTimeRef.current) {
         lightningTimeRef.current = 0;
         nextLightningTimeRef.current = 5 + Math.random() * 8; // strike every 5-13 seconds
-        
+
         // Generate new procedural jagged lightning bolt path
         boltRef.current = {
           visible: true,
@@ -1193,7 +1193,7 @@ export default function AtmosphereCycleManager({
           dz2: (Math.random() - 0.5) * 140 + (Math.random() > 0.5 ? 60 : -60),
         };
       }
-      
+
       const elapsed = lightningTimeRef.current;
       // Real lightning double strike/flicker
       if (elapsed < 0.08) {
@@ -1221,12 +1221,12 @@ export default function AtmosphereCycleManager({
           // Segment 1 (Vertical top)
           children[0].position.set(b.startX, 290, b.startZ);
           // Segment 2 (Horizontal link 1)
-          children[1].position.set(b.startX + b.dx1/2, 260, b.startZ + b.dz1/2);
+          children[1].position.set(b.startX + b.dx1 / 2, 260, b.startZ + b.dz1 / 2);
           children[1].scale.set(Math.abs(b.dx1) + 8, 8, Math.abs(b.dz1) + 8);
           // Segment 3 (Vertical middle)
           children[2].position.set(b.startX + b.dx1, 190, b.startZ + b.dz1);
           // Segment 4 (Horizontal link 2)
-          children[3].position.set(b.startX + b.dx1 + b.dx2/2, 150, b.startZ + b.dz1 + b.dz2/2);
+          children[3].position.set(b.startX + b.dx1 + b.dx2 / 2, 150, b.startZ + b.dz1 + b.dz2 / 2);
           children[3].scale.set(Math.abs(b.dx2) + 8, 8, Math.abs(b.dz2) + 8);
           // Segment 5 (Vertical bottom)
           children[4].position.set(b.startX + b.dx1 + b.dx2, 70, b.startZ + b.dz1 + b.dz2);
@@ -1235,8 +1235,14 @@ export default function AtmosphereCycleManager({
     }
 
     if (active) {
-      const cycleDuration = 420; // 7 minutes total cycle
-      const rawProgress = (clock.elapsedTime / cycleDuration) % 1.0;
+      const now = new Date();
+
+      const hours =
+        now.getHours() +
+        now.getMinutes() / 60 +
+        now.getSeconds() / 3600;
+
+      const rawProgress = hours / 24;
 
       const p_day = 270 / 420; // ~0.642857 (Day takes 270s out of 420s)
       const dayStart = 0.5 - p_day / 2;
