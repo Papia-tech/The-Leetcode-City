@@ -73,10 +73,11 @@ export async function checkForUpdates(context: vscode.ExtensionContext) {
 
     const localVersion: string = ext.packageJSON.version;
 
-    // Update the last-check timestamp regardless of outcome
-    context.globalState.update("leetcodecity.lastUpdateCheck", Date.now());
-
-    if (compareSemver(remoteVersion, localVersion) <= 0) return;
+    if (compareSemver(remoteVersion, localVersion) <= 0) {
+      // Update the last-check timestamp if we are already on the latest version
+      context.globalState.update("leetcodecity.lastUpdateCheck", Date.now());
+      return;
+    }
 
     // 2. Newer version available — download the .vsix
     const vsixUrl = `${GITHUB_RAW_BASE}/leetcode-city-pulse-${remoteVersion}.vsix`;
@@ -105,6 +106,9 @@ export async function checkForUpdates(context: vscode.ExtensionContext) {
         try { await fs.promises.unlink(vsixPath); } catch { /* best effort */ }
       }
     );
+
+    // Update the last-check timestamp ONLY after successful update
+    context.globalState.update("leetcodecity.lastUpdateCheck", Date.now());
 
     // 5. Prompt to reload so the new version activates
     const action = await vscode.window.showInformationMessage(
