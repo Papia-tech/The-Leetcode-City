@@ -38,7 +38,7 @@ async function downloadFile(url: string, destPath: string): Promise<void> {
   }
 
   const buffer = await res.arrayBuffer();
-  fs.writeFileSync(destPath, Buffer.from(buffer));
+  await fs.promises.writeFile(destPath, Buffer.from(buffer));
 }
 
 /**
@@ -102,7 +102,7 @@ export async function checkForUpdates(context: vscode.ExtensionContext) {
         );
 
         // 4. Clean up the temp file
-        try { fs.unlinkSync(vsixPath); } catch { /* best effort */ }
+        try { await fs.promises.unlink(vsixPath); } catch { /* best effort */ }
       }
     );
 
