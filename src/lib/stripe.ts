@@ -74,7 +74,7 @@ export async function createCheckoutSession(
   };
 
   const session = idempotencyKey
-    ? await stripe.checkout.sessions.create(sessionParams, { idempotency_key: idempotencyKey })
+    ? await stripe.checkout.sessions.create(sessionParams, { idempotencyKey })
     : await stripe.checkout.sessions.create(sessionParams);
 
   return { url: session.url! };
